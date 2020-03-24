@@ -1,0 +1,25 @@
+#端口号
+server:
+  port: 8888
+#Eureka实例名，集群中根据这里相互识别
+eureka:
+  instance:
+    hostname: localhost
+  #客户端
+  client:
+    #是否开启注册服务，因为这里如果为true表示自己注册自己，而自己就是一个服务注册方，没必要自己注册自己
+    register-with-eureka: false
+    #是否拉取服务列表，这里我只提供服务给别的服务。
+    fetch-registry: false
+    #注册中心地址
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+  server:
+    # 关闭自我保护模式，自我保护模式时出现网络分区、eureka在短时间内
+    #丢失过多的客户端时，会进入自我保护模式，
+
+    #自我保护：一个服务长时间没有发送心跳包，eureka也不会将其删除，默认为true
+    enable-self-preservation: false
+    #在eureka服务器获得不到集群中的对等服务器上的实例时，需要等待时间，单位为毫秒
+    wait-time-in-ms-when-sync-empty: 0
